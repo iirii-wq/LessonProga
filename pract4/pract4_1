@@ -1,0 +1,7 @@
+import math
+x1=float(input("введите число: "))
+x_2=math.ceil(x1)
+x_1=math.floor(x1)
+summa= x_1+x_2
+print('округлим вверх и вниз, а затем сложим')
+print(x_2, '+', x_1, '=', summa)
