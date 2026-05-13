@@ -1,0 +1,20 @@
+numbers = [2, 6, 3, 14, 10, 4, 11, 16, 12, 5, 4, 16, 1, 0, 8, 16, 10, 10, 8, 5, 1, 11, 10, 10, 12, 0, 0, 6, 14, 8, 2, 12, 14, 5, 6, 12, 1, 2, 10, 14, 9, 1, 15, 1, 2, 14, 16, 6, 7, 5]
+
+print("Количество значений в списке: ",len(numbers))
+
+print("Последнее значение: ",numbers[-1])
+
+print("В обратном порядке:")
+print(numbers[::-1])
+
+count = numbers.count(5)
+count2 = numbers.count(17)
+if count > 0 or count2 > 0:
+    print("YES")
+else:
+    print("NO")
+
+del numbers[:1]
+del numbers[-1]
+print("Удаление первого и последнего элементов:")
+print(numbers)
