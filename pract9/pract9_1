@@ -1,0 +1,7 @@
+n = int(input('Введите число: '))
+number = 1
+
+while number <= n:
+    if (number < 5 or number > 9 ) and (number < 17 or number > 37) and (number < 78 or number > 87 ):
+        print(number)
+    number += 1
