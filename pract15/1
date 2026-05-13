@@ -1,0 +1,137 @@
+print('Символы лабиринта: \n 0 — проход (можно идти) \n 1 — стена (нельзя пройти) \n л — ловушка (-10 HP) \n м — монета (+1 монета) \n ф — выход (нужно дойти до него и не погибнуть) \n з — враг (-50 HP) \n н — начальная точка (вход)')
+print('')
+
+# Ввод строки лабиринта
+labyrinth_str = input("Введите строку лабиринта (25 символов): ")
+
+# Проверка длины строки
+if len(labyrinth_str) != 25:
+    print("Ошибка: строка должна содержать ровно 25 символов!")
+else:
+    # Вывод лабиринта
+    print("Лабиринт:")
+
+    # Выводим лабиринт по 5 символов в строке, используя срезы
+    print(labyrinth_str[0:5])
+    print(labyrinth_str[5:10])
+    print(labyrinth_str[10:15])
+    print(labyrinth_str[15:20])
+    print(labyrinth_str[20:25])
+
+    # Инициализируем переменные для координат
+    row_number1 = column_number1 = row_number2 = column_number2 = -1
+    entrance_found = exit_found = False
+
+    # Проверяем, есть ли символ 'н' в строке
+    if 'н' in labyrinth_str:
+        # Находим индекс первого вхождения символа 'н'
+        entrance_index1 = labyrinth_str.index('н')
+
+        # Вычисляем координаты
+        row_number1 = entrance_index1 // 5
+        column_number1 = entrance_index1 % 5
+
+        print(f"Координаты входа (нумерация с 0): строка {row_number1}, столбец {column_number1}")
+        entrance_found = True
+    else:
+        print("Вход в лабиринт (символ 'н') не найден!")
+
+    # Проверяем, есть ли символ 'ф' в строке
+    if 'ф' in labyrinth_str:
+        # Находим индекс первого вхождения символа 'ф'
+        entrance_index2 = labyrinth_str.index('ф')
+
+        # Вычисляем координаты
+        row_number2 = entrance_index2 // 5
+        column_number2 = entrance_index2 % 5
+
+        print(f"Координаты выхода (нумерация с 0): строка {row_number2}, столбец {column_number2}")
+        exit_found = True
+    else:
+        print("Выход из лабиринта (символ 'ф') не найден!")
+
+    # Вычисляем расстояние только если оба символа найдены
+    if entrance_found and exit_found:
+        rasstoyanie = abs(row_number1 - row_number2) + abs(column_number1 - column_number2)
+        print(f'Манхэттенское расстояние: {rasstoyanie}')
+    else:
+        print("Невозможно вычислить расстояние: вход или выход не найден")
+
+    coins_count = 0
+    # Список для хранения позиций монет
+    coins_positions = []
+
+    # Поиск входа, выхода и подсчет монет за один проход по строке
+    entrance_row = entrance_col = exit_row = exit_col = -1
+    for i in range(len(labyrinth_str)):
+        if labyrinth_str[i] == 'н':
+            # Найден вход
+            entrance_row = i // 5
+            entrance_col = i % 5
+        elif labyrinth_str[i] == 'ф':
+            # Найден выход
+            exit_row = i // 5
+            exit_col = i % 5
+        elif labyrinth_str[i] == 'м':
+            # Найдена монета
+            coins_count += 1
+            coins_positions.append(i)  # Сохраняем позицию монеты
+
+    print(f"Найдено монет в лабиринте: 🟡*{coins_count}")
+
+    # Начальное здоровье
+    health = 100
+    print(f'Начальное здоровье игрока: {health} HP')
+
+    # Переменные для подсчета элементов
+    traps_count = 0
+    enemies_count = 0
+
+    # Списки для хранения позиций элементов
+    traps_positions = []
+    enemies_positions = []
+
+    for i in range(len(labyrinth_str)):
+        current_char = labyrinth_str[i]
+
+        if current_char == 'л':
+            # Найдена ловушка
+            traps_count += 1
+            traps_positions.append(i)
+        elif current_char == 'з':
+            # Найден враг
+            enemies_count += 1
+            enemies_positions.append(i)
+
+    # Вычисляем урон
+    trap_damage = traps_count * 10  # Каждая ловушка отнимает 10 HP
+    enemy_damage = enemies_count * 50  # Каждый враг отнимает 50 HP
+    total_damage = trap_damage + enemy_damage
+
+    print(f"Ловушек в лабиринте: {traps_count}")
+    print(f"Врагов в лабиринте: {enemies_count}")
+    print(f"Общий урон: {trap_damage} + {enemy_damage} = {total_damage} HP")
+
+    # Вычисляем оставшееся здоровье
+    remaining_health = health - total_damage
+
+    # Проверяем, не упало ли здоровье ниже 0
+    if remaining_health < 0:
+        remaining_health = 0
+
+    print(f"Оставшееся здоровье: {health} - {total_damage} = {remaining_health} HP")
+
+    # Вычисляем количество сердечек для отображения
+    hearts_full = remaining_health // 10  # Количество полных сердец
+    hearts_empty = total_damage // 10  # Количество пустых сердец
+
+    # Строка с сердцами
+    hearts_display = ""
+
+    # Добавляем полные сердца
+    hearts_display += "♥" * hearts_full
+
+    # Добавляем пустые сердца
+    hearts_display += "♡" * hearts_empty
+
+    print(f"Итог: {hearts_display}")
