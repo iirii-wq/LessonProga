@@ -1,0 +1,15 @@
+import random
+
+n = [[random.randint(1, 100) for i in range (5)] for j in range(4)]
+print(f'Список: {n}')
+
+# поиск максимума
+max_ = n [0][0]
+max_i , max_j = 0 , 0
+for i in range (len(n)):
+    for j in range (len(n[i])):
+        if n[i][j] > max_:
+            max_ = n[i][j]
+            max_i , max_j = i, j
+
+print(f'Максимум: {max_} на позиции [{max_i}] [{max_j}]')
