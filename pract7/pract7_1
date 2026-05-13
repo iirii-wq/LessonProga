@@ -1,0 +1,23 @@
+grade = int(input('Введите оценку (от 1 до 10) : '))
+
+match grade:
+    case 1 | 2 | 3 :
+        description = 'Плохой продукт'
+        emoji = '🤬'
+        recommendation = 'Не рекомендую'
+    case 5 | 6 | 4 :
+        description = 'Средний продукт'
+        emoji = '🙂'
+        recommendation = 'Можно попробовать'
+    case 8 | 7 :
+        description = 'Хороший продукт'
+        emoji = '😚'
+        recommendation = 'Рекомендую'
+    case 9 | 10 :
+        description = 'Отличный продукт!'
+        emoji = '😍'
+        recommendation = 'Настоятельно рекомендую!'
+    case _:
+        print('Ошибка! Введите число от 1 до 10.')
+
+print(f'Рейтинг {grade} => {description} {emoji} {recommendation}')
